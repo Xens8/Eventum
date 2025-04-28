@@ -1,0 +1,11 @@
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+.gradient-custom {
+    height: 100vh; /* 100% del alto de la pantalla */
+    background: #6a11cb;
+    background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+    background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+}
