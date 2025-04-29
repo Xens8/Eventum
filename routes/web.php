@@ -14,42 +14,43 @@ use App\Http\Controllers\Auth\GoogleController;
 |---------------------------------------------------------------------- 
 */
 
+// Rutas públicas (sin autenticación)
 Route::get('/', function () {
-    return view('welcome'); // Página de bienvenida
+    return view('welcome');
 });
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
-
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 
-Route::get('/home', function () {
-    return view('home'); // Página principal después de iniciar sesión
-})->name('home');
+// Ruta de verificación de email (si aplica)
+Route::get('/verify/{token}', [VerificationController::class, 'verify'])->name('verify');
 
-Route::post('logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
-
-Route::get('/mis-eventos', [EventController::class, 'index'])->name('mis.eventos');
-Route::get('/recomendados', [EventController::class, 'recomendados'])->name('recomendados');
-Route::get('/perfil', [ProfileController::class, 'show'])->name('perfil');
-
-// Rutas de administración de eventos protegidas por rol de administrador
-Route::group(['middleware' => ['auth', 'role:admin']], function() {
-    Route::get('/admin/eventos', [EventController::class, 'mostrarEventos'])->name('admin.eventos');
-    Route::post('/admin/añadir-evento', [EventController::class, 'agregarEvento'])->name('admin.guardarEvento');
-    Route::delete('/admin/eliminar-evento/{id}', [EventController::class, 'eliminarEvento'])->name('admin.eliminarEvento');
-});
-
-// Rutas de perfil y actualización de datos
-Route::middleware(['auth'])->group(function () {
-    Route::get('/perfil', [ProfileController::class, 'show'])->name('perfil');
-    Route::post('/perfil/actualizar', [ProfileController::class, 'update'])->name('updatePerfil');
-});
-
+// Rutas de autenticación social
 Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
 Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
-Route::get('/verify/{token}', [VerificationController::class, 'verify'])->name('verify');
+// Grupo de rutas PROTEGIDAS (requieren autenticación)
+Route::middleware(['auth'])->group(function () {
+    // Dashboard/home protegido
+    Route::get('/home', function () {
+        return view('home');
+    })->name('home');
 
+    // Cerrar sesión
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
+    // Eventos y perfil
+    Route::get('/mis-eventos', [EventController::class, 'index'])->name('mis.eventos');
+    Route::get('/recomendados', [EventController::class, 'recomendados'])->name('recomendados');
+    Route::get('/perfil', [ProfileController::class, 'show'])->name('perfil');
+    Route::post('/perfil/actualizar', [ProfileController::class, 'update'])->name('updatePerfil');
+
+    // Grupo de rutas ADMIN (requieren rol admin)
+    Route::middleware(['role:admin'])->group(function() {
+        Route::get('/admin/eventos', [EventController::class, 'mostrarEventos'])->name('admin.eventos');
+        Route::post('/admin/añadir-evento', [EventController::class, 'agregarEvento'])->name('admin.guardarEvento');
+        Route::delete('/admin/eliminar-evento/{id}', [EventController::class, 'eliminarEvento'])->name('admin.eliminarEvento');
+    });
+});
