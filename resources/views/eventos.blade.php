@@ -4,6 +4,9 @@
   <title>Eventum - Plataforma de Eventos</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
+
   
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -199,21 +202,38 @@
   }
 
   // Lógica para agregar evento
-  document.getElementById("eventForm").addEventListener("submit", function(event) {
+  $('#eventForm').on('submit', function(event) {
     event.preventDefault();
 
-    const nombre = document.getElementById("eventoNombre").value;
-    const descripcion = document.getElementById("eventoDescripcion").value;
-    const fecha = document.getElementById("eventoFecha").value;
-    const lugar = document.getElementById("eventoLugar").value;
-    const precio = document.getElementById("eventoPrecio").value;
+    const nombre = $('#eventoNombre').val();
+    const descripcion = $('#eventoDescripcion').val();
+    const fecha = $('#eventoFecha').val();
+    const lugar = $('#eventoLugar').val();
+    const precio = $('#eventoPrecio').val();
 
-    // Aquí deberías enviar la data al backend o actualizar la lista de eventos
-    alert("Evento añadido: " + nombre);
+    $.ajax({
+        url: '/admin/añadir-evento',
+        method: 'POST',
+        data: {
+            _token: $('meta[name="csrf-token"]').attr('content'),
+            nombre: nombre,
+            descripcion: descripcion,
+            fecha: fecha,
+            lugar: lugar,
+            precio: precio
+        },
+        success: function(response) {
+            alert("Evento añadido con éxito");
+            $('#agregarEventoModal').modal('hide');
+            // Recargar la lista de eventos o actualizar la vista
+        },
+        error: function(xhr, status, error) {
+            alert("Error al guardar el evento: " + xhr.responseText);
+        }
+    });
+});
 
-    // Cerrar el modal
-    $('#agregarEventoModal').modal('hide');
-  });
+
 </script>
 
 </body>

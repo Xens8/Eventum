@@ -1,5 +1,7 @@
 <?php
 
+// Archivo: EventController.php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -12,12 +14,14 @@ class EventController extends Controller
 {
     public function index()
     {
-        return view('mis-eventos'); // Vista para mostrar los eventos del usuario
+        $eventos = Event::all(); // Obtiene todos los eventos
+        return view('mis-eventos', compact('eventos')); // Envía los datos a la vista
     }
 
     public function recomendados()
     {
-        return view('recomendados'); // Vista para los eventos recomendados
+        $eventos = Event::all(); 
+        return view('recomendados', compact('eventos'));
     }
 
     // Mostrar los eventos en la vista para el admin
@@ -29,14 +33,18 @@ class EventController extends Controller
     // Agregar un nuevo evento
     public function agregarEvento(Request $request)
     {
+        
         $request->validate([
-            'name' => 'required',
-            'date' => 'required|date',
-            // Agrega más validaciones si es necesario
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'required|string',
+            'fecha' => 'required|date',
+            'lugar' => 'required|string|max:255',
+            'precio' => 'required|numeric',
         ]);
 
-        Event::create($request->all()); // Crear un nuevo evento
+        Event::create($request->only(['nombre', 'descripcion', 'fecha', 'lugar', 'precio']));
         return redirect()->route('admin.eventos')->with('success', 'Evento agregado con éxito');
+
     }
 
     // Eliminar un evento

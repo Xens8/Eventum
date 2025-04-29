@@ -109,19 +109,21 @@
     <div class="col-sm-9">
       <h4><small>EVENTOS RECOMENDADOS</small></h4>
       <hr>
-      <h2>Festival de Tecnología</h2>
-      <h5><span class="glyphicon glyphicon-time"></span> <span style="color: #f8f9fa;">25 de Abril, 2025 - Ciudad de México</span></h5>
       
-      <p>Explora lo último en inteligencia artificial, realidad aumentada y robótica en un festival único lleno de experiencias interactivas y networking con expertos.</p>
-      <br><br>
-      
-      <h4><small>RECOMENDADO PARA TI</small></h4>
-      <hr>
-      <h2>Concierto de Música Indie</h2>
-      <h5><span class="glyphicon glyphicon-time"></span> <span style="color: #f8f9fa;">20 de Abril, 2025 - Guadalajara</span></h5>
-      <h5><span class="label">Música</span> <span class="label">Festival</span></h5><br>
-      <p>Una noche mágica con bandas emergentes y food trucks en un ambiente relajado. ¡Lleva a tus amigos y descubre tu nueva banda favorita!</p>
-      <hr>
+      <!-- Iteración de eventos recomendados -->
+      @foreach($eventos as $evento)
+        <h2>{{ $evento->nombre }}</h2>
+        <h5><span class="glyphicon glyphicon-time"></span> 
+          <span style="color: #f8f9fa;">
+            {{ \Carbon\Carbon::parse($evento->fecha)->format('d \d\e F, Y') }} - 
+            {{ $evento->ciudad }}
+          </span>
+        </h5>
+        
+        <h5><span class="label">{{ $evento->categoria }}</span></h5><br>
+        <p>{{ $evento->descripcion }}</p>
+        <hr>
+      @endforeach
 
       <h4>Déjanos tu comentario:</h4>
       <form role="form">
