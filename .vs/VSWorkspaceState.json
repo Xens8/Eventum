@@ -1,7 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\app",
+    "\\resources",
+    "\\resources\\views",
+    "\\resources\\views\\layouts"
   ],
-  "SelectedNode": "\\.env",
+  "SelectedNode": "\\resources\\views\\layouts\\app.blade.php",
   "PreviewInSolutionExplorer": false
 }

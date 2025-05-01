@@ -7,6 +7,104 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('assets/style.css') }}">
+
+    <!-- Custom Styles -->
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+    }
+
+    .gradient-custom {
+      height: 100vh;
+      background: linear-gradient(to right, #2c3e50, #4ca1af);
+      color: #f8f9fa;
+    }
+
+    .row.content {
+      height: 100%;
+    }
+
+    .sidenav {
+      background-color: rgba(255, 255, 255, 0.1);
+      height: 100%;
+      padding-top: 20px;
+    }
+
+    .sidenav h4,
+    .sidenav .nav > li > a {
+      color: #f8f9fa;
+    }
+
+    .sidenav .nav > li.active > a,
+    .sidenav .nav > li > a:hover {
+      background-color: #ffffff22;
+      color: #fff;
+    }
+
+    footer {
+      background-color: #222;
+      color: #f8f9fa;
+      padding: 15px;
+      text-align: center;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .label {
+      background-color: rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+      border-radius: 0.25em;
+      padding: 4px 8px;
+      font-size: 12px;
+    }
+
+    h4 small,
+    h5,
+    .comment small {
+      color: #f8f9fa !important;
+    }
+
+    .profile-header {
+      background-color: #ffffff22;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .profile-header h3 {
+      margin: 0;
+      font-size: 1.5em;
+    }
+
+    .profile-header h5 {
+      color: #f8f9fa;
+      font-size: 1.1em;
+      font-style: italic;
+    }
+
+    .form-group input, .form-group textarea {
+      background-color: rgba(255, 255, 255, 0.25);
+      color: #fff;
+      border: 1px solid #ffffff55;
+    }
+
+    .form-group input:focus, .form-group textarea:focus {
+      border-color: #ffffff;
+    }
+
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {
+        height: auto;
+      }
+    }
+  </style>
+
   </head>
 
   <body class="gradient-custom">

@@ -20,8 +20,8 @@
     }
 
     .gradient-custom {
-      height: 100%;
-      background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+      height: 100vh;
+      background: linear-gradient(to right, #2c3e50, #4ca1af);
       color: #f8f9fa;
     }
 
